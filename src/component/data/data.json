@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "bao hung",
+    "tel": "090909090909",
+    "permission": 1
+  },
+  {
+    "id": 2,
+    "name": "xuan hung",
+    "tel": "090909090909",
+    "permission": 2
+  },
+  {
+    "id": 3,
+    "name": "van hung",
+    "tel": "090909090909",
+    "permission": 3
+  },
+  {
+    "id": 4,
+    "name": "hoang hung",
+    "tel": "090909090909",
+    "permission": 2
+  },
+  {
+    "id": 5,
+    "name": "minh hung",
+    "tel": "090909090909",
+    "permission": 1
+  }
+]
