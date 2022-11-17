@@ -17,6 +17,10 @@ export default class ListRow extends Component {
       return "Nomal User";
     }
   };
+  deleteUser = (idUser) => {
+    // console.log("id User la: " + idUser);
+    this.props.deleteClick(idUser);
+  };
   render() {
     return (
       <tr>
@@ -35,7 +39,8 @@ export default class ListRow extends Component {
             </div>
             <div
               className="btn btn-danger xoa"
-              onClick={() => this.props.getID(this.props.id)}
+              // onClick={() => this.props.getID(this.props.id)}
+              onClick={(idUser) => this.deleteUser(this.props.id)}
             >
               <i className="fa fa-minus" aria-hidden="true" />
               Xóa

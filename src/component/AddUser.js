@@ -129,7 +129,7 @@ export default class AddUser extends Component {
             </div>
             <div className="form-group">
               <div
-                onClick={(add) => this.props.AddNewUser(this.state)}
+                onClick={(name, tel, permission) => this.props.AddNewUser(this.state.name, this.state.tel, this.state.permission)}
                 className="btn btn-block btn-primary"
               >
                 Thêm

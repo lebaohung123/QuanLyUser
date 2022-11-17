@@ -1,11 +1,15 @@
-import React, { Component } from 'react'
-import ListRow from './ListRow'
+import React, { Component } from "react";
+import ListRow from "./ListRow";
 
 export default class List extends Component {
+  // Ham lay id tu List Row gui len
+  deleteClick = (idUser) => {
+    this.props.deleteUserInfo(idUser);
+  };
   render() {
     // console.log(this.props.dataUser);
     return (
-        <div className="col">
+      <div className="col">
         <table className="table table-striped table-hover">
           <thead className="thead-inverse">
             <tr>
@@ -19,21 +23,23 @@ export default class List extends Component {
           <tbody>
             {
               //nhiều dòng thì dùng ngoặc nhọn và return còn 1 thì dùng ngoặc tròn
-              this.props.dataUser.map((value,key) =>(
-                <ListRow 
-                stt={key}
-                userName={value.name} 
-                tel={value.tel}
-                quyen={value.permission}
-                id={value.id}
-                getID={(abc) => this.props.xoaID(abc)}
+              this.props.dataUser.map((value, key) => (
+                <ListRow
+                  stt={key}
+                  userName={value.name}
+                  tel={value.tel}
+                  quyen={value.permission}
+                  id={value.id}
+                  deleteClick={(idUser) => {
+                    this.deleteClick(idUser);
+                  }}
+                  // getID={(abc) => this.props.xoaID(abc)}
                 />
               ))
             }
           </tbody>
         </table>
       </div>
-      
-    )
+    );
   }
 }

@@ -41,17 +41,36 @@ class App extends Component {
     });
   };
   //hàm lấy thông tin thêm user
-  getNewUser = (dlAdd) => {
-    // console.log(dlAdd);
-    const newUser = {
-      id: Math.floor(Math.random() * 10),
-      name: dlAdd.name,
-      tel: dlAdd.tel,
-      permission: dlAdd.permission,
-    };
+  getNewUser = (name, tel, permission) => {
+    // console.log(name);
+    // console.log(tel);
+    // console.log(permission);
+    //khai bao doi tuong rong
+    var item = {};
+    item.id = "";
+    item.name = name;
+    item.tel = tel;
+    item.permission = permission;
+    // console.log(item);
+    var newItem = this.state.data;
+    newItem.push(item);
+    // console.log(newItem);
     this.setState({
-      data: [...this.state.data, newUser],
+      data: newItem,
     });
+  };
+  // Ham Lay ID Xoa Tu List
+  deleteUserInfo = (idUser) => {
+    // console.log(idUser);
+    // this.state.data.forEach((value, key) => {
+    //   if(value.id == idUser){
+    //     console.log(value.name);
+    //   }
+    // })
+    var tempData = this.state.data;
+    tempData.filter((item) => item.id !== idUser);
+    // console.log(tempData);
+    this.setState({ data: tempData });
   };
   render() {
     // console.log(dl);
@@ -75,11 +94,14 @@ class App extends Component {
             />
             <List
               dataUser={ketqua}
-              xoaID={(abc) => this.deleteUser(abc)}
+              deleteUserInfo={(idUser) => this.deleteUserInfo(idUser)}
+              // xoaID={(abc) => this.deleteUser(abc)}
             />
             <AddUser
               hienThiForm={this.state.hienThiForm}
-              AddNewUser={(add) => this.getNewUser(add)}
+              AddNewUser={(name, tel, permission) =>
+                this.getNewUser(name, tel, permission)
+              }
             />
           </div>
         </div>
