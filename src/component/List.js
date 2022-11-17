@@ -6,6 +6,9 @@ export default class List extends Component {
   deleteClick = (idUser) => {
     this.props.deleteUserInfo(idUser);
   };
+  updateClick = (id, name, phone, permission) => {
+    this.props.upDateUserInfo(id, name, phone, permission);
+  };
   render() {
     // console.log(this.props.dataUser);
     return (
@@ -33,7 +36,9 @@ export default class List extends Component {
                   deleteClick={(idUser) => {
                     this.deleteClick(idUser);
                   }}
-                  // getID={(abc) => this.props.xoaID(abc)}
+                  updateClick={(id, name, phone, permission) => {
+                    this.updateClick(id, name, phone, permission);
+                  }}
                 />
               ))
             }

@@ -47,7 +47,7 @@ class App extends Component {
     // console.log(permission);
     //khai bao doi tuong rong
     var item = {};
-    item.id = "";
+    item.id = Math.floor(Math.random() * 100);
     item.name = name;
     item.tel = tel;
     item.permission = permission;
@@ -68,9 +68,24 @@ class App extends Component {
     //   }
     // })
     var tempData = this.state.data;
-    tempData.filter((item) => item.id !== idUser);
     // console.log(tempData);
-    this.setState({ data: tempData });
+    this.setState({ data: tempData.filter((item) => item.id !== idUser) });
+  };
+  upDateUser = (id, name, phone, permission) => {
+    // console.log(id);
+    // console.log(name);
+    // console.log(phone);
+    // console.log(permission);
+    const currentData = this.state.data;
+    const tempItem = currentData.find((idData) => idData.id === id);
+    // console.log(tempItem);
+    tempItem.name = name;
+    tempItem.tel = phone;
+    tempItem.permission = permission;
+    console.log(currentData);
+    this.setState({
+      data: currentData,
+    });
   };
   render() {
     // console.log(dl);
@@ -95,6 +110,9 @@ class App extends Component {
             <List
               dataUser={ketqua}
               deleteUserInfo={(idUser) => this.deleteUserInfo(idUser)}
+              upDateUserInfo={(id, name, phone, permission) =>
+                this.upDateUser(id, name, phone, permission)
+              }
               // xoaID={(abc) => this.deleteUser(abc)}
             />
             <AddUser
