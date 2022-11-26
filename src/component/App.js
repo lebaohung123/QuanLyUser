@@ -1,131 +1,156 @@
-import { Component } from "react";
-import "../App.css";
-import AddUser from "./AddUser";
-import Header from "./Header";
-import List from "./List";
-import Search from "./Search";
-import dl from "./data/data.json";
+
+import { Component } from 'react';
+import '../App.css';
+import AddUser from './AddUser';
+import Header from './Header';
+import List from './List';
+import Search from './Search';
+import dl from './data/data.json';
 
 // function App() {
-class App extends Component {
+class App extends Component{
   constructor(props, context) {
     super(props, context);
-    this.state = { hienThiForm: true, data: dl, search: "" };
+    this.state={hienThiForm:true,
+    data:dl,
+    search:'',
+    add:'',
+    editUserStatus: false,
+    userEditObject:{}//khai báo 1 biến state để lưu đối tượng
   }
-
+  }
+  
   // thongBao=() =>{
   //   alert('đã kết nối');
   // }
-  searchDL = (abc) => {
-    this.setState({
-      search: abc,
-    });
-  };
 
-  doiTrangThai = () => {
-    this.setState({ hienThiForm: !this.state.hienThiForm });
-  };
-
-  //hàm lấy thông tin tìm kiếm
-  infoSearch = (dl) => {
+  doiTrangThai=() =>{
+    this.setState({hienThiForm:!this.state.hienThiForm});
+  }
+  
+//hàm lấy thông tin tìm kiếm
+  infoSearch=(dlSearch) =>{
     // alert("dữ liệu bố nhận được " +dl)
     // console.log(dlSearch);
-    this.setState({ search: dl });
-  };
+    this.setState({search:dlSearch})
+  }
 
-  deleteUser = (abc) => {
-    // console.log("duoc roi ne " + abc);
-    const currentData = this.state.data;
-    this.setState({
-      data: currentData.filter((item) => item.id !== abc),
-    });
-  };
   //hàm lấy thông tin thêm user
-  getNewUser = (name, tel, permission) => {
+  getNewUser=(name,tel,permission) =>{
+    //alert('ok')
+    //log ra xem bố đã nhận được chưa
     // console.log(name);
     // console.log(tel);
     // console.log(permission);
-    //khai bao doi tuong rong
-    var item = {};
-    item.id = Math.floor(Math.random() * 100);
-    item.name = name;
-    item.tel = tel;
-    item.permission = permission;
+    // xuất ra theo 1 item chứ không xuất theo từng giá trị
+
+    var item={};//ban đầu là đối tượng rỗng
+    item.id='';
+    item.name=name;
+    item.tel=tel;
+    item.permission=permission;
     // console.log(item);
-    var newItem = this.state.data;
+
+    //lưu vào json nên k lưu vào data f5 là mất 
+    var newItem=this.state.data;
     newItem.push(item);
     // console.log(newItem);
-    this.setState({
-      data: newItem,
-    });
-  };
-  // Ham Lay ID Xoa Tu List
-  deleteUserInfo = (idUser) => {
+    this.setState({data:newItem});
+  }
+
+  
+  //hàm lấy id xóa từ list
+  deleteUserInfo=(idUser) =>{
     // console.log(idUser);
-    // this.state.data.forEach((value, key) => {
-    //   if(value.id == idUser){
-    //     console.log(value.name);
+    //hàm duyệt data 
+    // this.state.data.forEach((value,key)=>{
+    //   if(value.id===idUser){
+    //     // console.log(value.name);
+    //     //lấy hàm filter để xóa
+
     //   }
     // })
-    var tempData = this.state.data;
+
+    // var manga=[1,2,3,4,5];
+    // var x=3;
+    // manga=manga.filter(abc=>abc!=x)
+    // console.log(manga);
+
+    var tempData=this.state.data;
+    tempData=tempData.filter(item=>item.id!=idUser);
     // console.log(tempData);
-    this.setState({ data: tempData.filter((item) => item.id !== idUser) });
-  };
-  upDateUser = (id, name, phone, permission) => {
-    // console.log(id);
-    // console.log(name);
-    // console.log(phone);
-    // console.log(permission);
-    const currentData = this.state.data;
-    const tempItem = currentData.find((idData) => idData.id === id);
-    // console.log(tempItem);
-    tempItem.name = name;
-    tempItem.tel = phone;
-    tempItem.permission = permission;
-    console.log(currentData);
     this.setState({
-      data: currentData,
+      data:tempData
     });
-  };
-  render() {
+  }
+
+
+//hàm lấy thông tin cần sửa
+editUser=(abc) =>{
+  // alert("thông tin nhận được "+abc);
+  this.setState({userEditObject:abc})
+}
+
+//state viết trong app nên truyền setstate cho app luôn
+//hàm thay đổi trạng thái
+changeEditUserForm=() =>{
+  this.setState({
+    editUserStatus:!this.state.editUserStatus
+  });
+}
+
+// hàm lấy thông tin cần sửa từ list
+getEditInfoApp=(info) =>{
+  // alert("thông tin đã sửa " + info.name);
+  this.state.data.forEach((value,key) =>{
+    if(value.id===info.id){
+      value.name=info.name;
+      value.tel=info.tel;
+      value.permission=info.permission;
+    }
+  })
+
+}
+
+  render(){
     // console.log(dl);
     // console.log(this.state.search);
-    var ketqua = []; //khai báo mảng rỗng để lưu kết quả
-    this.state.data.forEach((item) => {
-      if (item.name.indexOf(this.state.search) !== -1) {
-        ketqua.push(item);
+    var ketqua=[]//khai báo mảng rỗng để lưu kết quả
+    this.state.data.forEach((item) =>{
+      if(item.name.indexOf(this.state.search)!==-1){
+        ketqua.push(item)
       }
-    });
-    return (
-      <div>
-        <Header />
-        <div className="container">
-          <div className="row">
-            <Search
-              ketnoi={() => this.doiTrangThai()}
-              infoSearch={(dl) => this.infoSearch(dl)}
-              trangThai={this.state.hienThiForm}
-              dlSearch={(abc) => this.searchDL(abc)}
-            />
-            <List
-              dataUser={ketqua}
-              deleteUserInfo={(idUser) => this.deleteUserInfo(idUser)}
-              upDateUserInfo={(id, name, phone, permission) =>
-                this.upDateUser(id, name, phone, permission)
-              }
-              // xoaID={(abc) => this.deleteUser(abc)}
-            />
-            <AddUser
-              hienThiForm={this.state.hienThiForm}
-              AddNewUser={(name, tel, permission) =>
-                this.getNewUser(name, tel, permission)
-              }
-            />
-          </div>
+    })
+  return (
+    <div>
+      <Header/>
+      <div className='container'>
+        <div className='row'>
+          <Search 
+          ketnoi={() =>this.doiTrangThai()}
+          infoSearch={(dl) =>this.infoSearch(dl)}
+          //nếu true thì hiện form sửa ra
+          editUserStatus={this.state.editUserStatus}
+          changeEditUserForm={() =>this.changeEditUserForm()}
+          userEditObject={this.state.userEditObject}
+          getEditInfoApp={(info) =>this.getEditInfoApp(info)}
+          hThi={this.state.hienThiForm}
+          />
+          <List dataUser={ketqua}
+                deleteUserInfo={(idUser) =>this.deleteUserInfo(idUser)}
+                edit={(abc)=> this.editUser(abc)}
+                changeEditUserForm={() =>this.changeEditUserForm()}
+          />
+          <AddUser 
+          hienThiForm={this.state.hienThiForm}
+          //id tự động nên k thêm vào
+          AddNewUser={(name, tel, permission) =>this.getNewUser(name, tel, permission)}
+          />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 export default App;

@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import ListRow from "./ListRow";
+import React, { Component } from 'react'
+import ListRow from './ListRow'
 
 export default class List extends Component {
-  // Ham lay id tu List Row gui len
-  deleteClick = (idUser) => {
+
+  //hàm lấy id từ listRow gửi lên
+  deleteClick=(idUser) =>{
+    // console.log(idUser);
     this.props.deleteUserInfo(idUser);
-  };
-  updateClick = (id, name, phone, permission) => {
-    this.props.upDateUserInfo(id, name, phone, permission);
-  };
+    
+  }
+
   render() {
     // console.log(this.props.dataUser);
     return (
-      <div className="col">
+        <div className="col">
         <table className="table table-striped table-hover">
           <thead className="thead-inverse">
             <tr>
@@ -26,25 +27,24 @@ export default class List extends Component {
           <tbody>
             {
               //nhiều dòng thì dùng ngoặc nhọn và return còn 1 thì dùng ngoặc tròn
-              this.props.dataUser.map((value, key) => (
-                <ListRow
-                  stt={key}
-                  userName={value.name}
-                  tel={value.tel}
-                  quyen={value.permission}
-                  id={value.id}
-                  deleteClick={(idUser) => {
-                    this.deleteClick(idUser);
-                  }}
-                  updateClick={(id, name, phone, permission) => {
-                    this.updateClick(id, name, phone, permission);
-                  }}
+              this.props.dataUser.map((value,key) =>(
+                <ListRow 
+                stt={key}
+                id={value.id}
+                userName={value.name} 
+                tel={value.tel}
+                quyen={value.permission}
+                deleteClick={(idUser) =>this.deleteClick(idUser)}
+                //trong hàm map nên lấy giá trị value
+                editFunClick={(abc) =>this.props.edit(value)}
+                changeEditUserForm={() =>this.props.changeEditUserForm()}
                 />
               ))
             }
           </tbody>
         </table>
       </div>
-    );
+      
+    )
   }
 }
